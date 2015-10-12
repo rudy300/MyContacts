@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        //8 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
+        //5 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
         if (contactdb != nil)
         {
             fullname.text = contactdb.valueForKey("fullname") as? String
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //5 Add to hide keyboard
+    //6 Add to hide keyboard
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first as UITouch! {
             DismissKeyboard()
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
         super.touchesBegan(touches , withEvent:event)
     }
     
-    //6 Add to hide keyboard
+    //7 Add to hide keyboard
     func DismissKeyboard(){
         //forces resign first responder and hides keyboard
         fullname.endEditing(true)
@@ -108,7 +108,7 @@ class ViewController: UIViewController {
         phone.endEditing(true)
         
     }
-    //7 Add to hide keyboard
+    //8 Add to hide keyboard
     func textFieldShouldReturn(textField: UITextField!) -> Bool     {
         textField.resignFirstResponder()
         return true;
