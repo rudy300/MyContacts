@@ -87,7 +87,9 @@ class ContactTableViewController: UITableViewController {
         return contactArray.count
         //return 0
 
-    }//7) Uncomment & Change to below to load rows
+    }
+    
+    //7) Uncomment & Change to below to load rows
  
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell =
@@ -101,7 +103,7 @@ class ContactTableViewController: UITableViewController {
         return cell
     }
 
-    //8) Add to show row clicked
+    //8) Add func tableView to show row clicked
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         print("You selected cell #\(indexPath.row)")
@@ -116,7 +118,7 @@ class ContactTableViewController: UITableViewController {
         return true
     }
 
-    //10) Uncomment
+    //10) Uncomment func tableView
 
 
     // Override to support editing the table view.
@@ -158,13 +160,13 @@ class ContactTableViewController: UITableViewController {
   
     // MARK: - Navigation
     
-   // 11) Uncomment prepareforseque
+   // 12) Uncomment prepareforseque
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        //12) Uncomment & Change to go to proper record on proper Viewcontroller
+        //13) Uncomment & Change to go to proper record on proper Viewcontroller
         if segue.identifier == "UpdateContacts" {
             if let destination = segue.destinationViewController as?
                 ViewController {
