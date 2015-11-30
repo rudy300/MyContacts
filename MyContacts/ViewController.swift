@@ -94,10 +94,10 @@ class ViewController: UIViewController {
     
     //6 Add to hide keyboard
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches , withEvent:event)
         if let touch = touches.first as UITouch! {
             DismissKeyboard()
         }
-        super.touchesBegan(touches , withEvent:event)
     }
     
     //7 Add to hide keyboard

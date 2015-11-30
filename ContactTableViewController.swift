@@ -12,14 +12,31 @@ import CoreData
 import Foundation
 
 
-class ContactTableViewController: UITableViewController {
+class ContactTableViewController: UITableViewController,UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
+    
+   //0.1 Add filter search vars
+     var filteredTableData = [NSManagedObject]()
+    var resultSearchController = UISearchController()
+   
+    
+//0.2 Add UISearch func
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        filteredTableData.removeAll(keepCapacity: false)
+        //search for field in CoreData
+        let searchPredicate = NSPredicate(format: "fullname CONTAINS[c] %@", searchController.searchBar.text!)
+        let array = (contactArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        filteredTableData = array as! [NSManagedObject]
+    
+        self.tableView.reloadData()
+    }
     
     
     //2) Add variable to hold NSManagedObject
     var contactArray = [NSManagedObject]()
     
     //3) Add viewDidAppear (loads whenever view appears)
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
         loaddb()
     }
@@ -36,22 +53,26 @@ class ContactTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest(entityName:"Contact")
         
         
-        var error: NSError?
+       var error: NSError?
         
-        
-        
-        do {
-            let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
-            if let results = fetchedResults {
-                contactArray = results
-                tableView.reloadData()
-            } else {
-                print("Could not fetch \(error), \(error!.userInfo)")
+       
+            //return contactArray.count
+            do {
+                let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+                if let results = fetchedResults {
+                    contactArray = results
+                    tableView.reloadData()
+                } else {
+                    print("Could not fetch \(error), \(error!.userInfo)")
+                }
+            } catch let error as NSError {
+                // failure
+                print("Fetch failed: \(error.localizedDescription)")
             }
-        } catch let error as NSError {
-            // failure
-            print("Fetch failed: \(error.localizedDescription)")
-        }
+
+        
+
+        
         
         
         
@@ -61,11 +82,24 @@ class ContactTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+       self.resultSearchController.delegate = self
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.delegate = self
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+           controller.searchBar.delegate = self
+        
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+        // Reload the table
+       // self.tableView.reloadData()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,7 +118,13 @@ class ContactTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         //6) Change to return contactArray.count
-        return contactArray.count
+        
+        if (self.resultSearchController.active) {
+            return filteredTableData.count
+        }
+        else {
+            return contactArray.count
+        }
         //return 0
 
     }
@@ -92,15 +132,26 @@ class ContactTableViewController: UITableViewController {
     //7) Uncomment & Change to below to load rows
  
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell =
-        tableView.dequeueReusableCellWithIdentifier("Cell")
-            as UITableViewCell!
         
-        let person = contactArray[indexPath.row]
-        cell.textLabel?.text = person.valueForKey("fullname") as! String?
-        cell.detailTextLabel?.text = ">>"
-        
-        return cell
+        if (self.resultSearchController.active) {
+            let cell =
+            tableView.dequeueReusableCellWithIdentifier("Cell")
+                as UITableViewCell!
+            let person = filteredTableData[indexPath.row]
+            cell.textLabel?.text = person.valueForKey("fullname") as! String?
+            cell.detailTextLabel?.text = ">>"
+            return cell
+        }
+        else {
+            let cell =
+            tableView.dequeueReusableCellWithIdentifier("Cell")
+                as UITableViewCell!
+            let person = contactArray[indexPath.row]
+            cell.textLabel?.text = person.valueForKey("fullname") as! String?
+            cell.detailTextLabel?.text = ">>"
+               return cell
+        }
+     
     }
 
     //8) Add func tableView to show row clicked
@@ -128,7 +179,13 @@ class ContactTableViewController: UITableViewController {
             let appDelegate =
             UIApplication.sharedApplication().delegate as! AppDelegate
             let context = appDelegate.managedObjectContext
-            context.deleteObject(contactArray[indexPath.row])
+            if (self.resultSearchController.active) {
+                context.deleteObject(filteredTableData[indexPath.row])
+            }
+            else {
+                  context.deleteObject(contactArray[indexPath.row])
+            }
+            
             var error: NSError? = nil
             do {
                 try context.save()
@@ -170,12 +227,23 @@ class ContactTableViewController: UITableViewController {
         if segue.identifier == "UpdateContacts" {
             if let destination = segue.destinationViewController as?
                 ViewController {
-                    if let SelectIndex = tableView.indexPathForSelectedRow?.row {
-                        
-                        let selectedDevice:NSManagedObject = contactArray[SelectIndex] as NSManagedObject
-                        destination.contactdb = selectedDevice
+                    if (self.resultSearchController.active) {
+                        if let SelectIndex = tableView.indexPathForSelectedRow?.row {
+                            let selectedDevice:NSManagedObject = filteredTableData[SelectIndex] as NSManagedObject
+                            destination.contactdb = selectedDevice
+                             resultSearchController.active = false
+                        }
+
                     }
-            }
+                    else {
+                        if let SelectIndex = tableView.indexPathForSelectedRow?.row {
+                            let selectedDevice:NSManagedObject = contactArray[SelectIndex] as NSManagedObject
+                            destination.contactdb = selectedDevice
+                        }
+
+                    }
+
+                               }
         }
     }
 
