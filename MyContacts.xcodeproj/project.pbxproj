@@ -13,9 +13,9 @@
 		36943C561BCC2A4300F388BD /* MyContacts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 36943C541BCC2A4300F388BD /* MyContacts.xcdatamodeld */; };
 		36943C581BCC2A4300F388BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36943C571BCC2A4300F388BD /* Assets.xcassets */; };
 		36943C5B1BCC2A4300F388BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36943C591BCC2A4300F388BD /* LaunchScreen.storyboard */; };
-		36943C641BCC2A9C00F388BD /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C621BCC2A9C00F388BD /* Contact+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
-		36943C651BCC2A9C00F388BD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C631BCC2A9C00F388BD /* Contact.swift */; settings = {ASSET_TAGS = (); }; };
-		36943C671BCC2E2700F388BD /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C661BCC2E2700F388BD /* ContactTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		36943C641BCC2A9C00F388BD /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C621BCC2A9C00F388BD /* Contact+CoreDataProperties.swift */; };
+		36943C651BCC2A9C00F388BD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C631BCC2A9C00F388BD /* Contact.swift */; };
+		36943C671BCC2E2700F388BD /* ContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C661BCC2E2700F388BD /* ContactTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,7 +107,6 @@
 				TargetAttributes = {
 					36943C491BCC2A4200F388BD = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = LAK6SGQ7Q5;
 					};
 				};
 			};

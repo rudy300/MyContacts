@@ -53,7 +53,7 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
         let fetchRequest = NSFetchRequest(entityName:"Contact")
         
         
-       var error: NSError?
+       //let error: NSError?
         
        
             //return contactArray.count
@@ -63,11 +63,11 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
                     contactArray = results
                     tableView.reloadData()
                 } else {
-                    print("Could not fetch \(error), \(error!.userInfo)")
+                    print("Could not fetch")
                 }
             } catch let error as NSError {
                 // failure
-                print("Fetch failed: \(error.localizedDescription)")
+                print("Fetch failed: \(error.localizedDescription),\(error.userInfo)")
             }
 
         

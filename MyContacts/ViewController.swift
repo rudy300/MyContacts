@@ -79,7 +79,7 @@ class ViewController: UIViewController {
         fullname.becomeFirstResponder()
         // Do any additional setup after loading the view.
         //Looks for single or multiple taps
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.DismissKeyboard))
         //Adds tap gesture to view
         view.addGestureRecognizer(tap)
 
@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     //6 Add to hide keyboard
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches , withEvent:event)
-        if let touch = touches.first as UITouch! {
+        if (touches.first as UITouch!) != nil {
             DismissKeyboard()
         }
     }
