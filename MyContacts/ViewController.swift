@@ -12,26 +12,16 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    //1) Add ManagedObject Data Context
-    let managedObjectContext =
-    (UIApplication.sharedApplication().delegate
-        as! AppDelegate).managedObjectContext
-    //2) Add variable contactdb (used from UITableView
-    var contactdb:NSManagedObject!
-
-    @IBAction func btnBack(sender: AnyObject) {
-        //3) Dismiss ViewController
-        self.dismissViewControllerAnimated(false, completion: nil)
-    }
-    
     @IBOutlet weak var fullname: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var btnSave: UIButton!
-    
     @IBOutlet weak var status: UILabel!
     @IBAction func btnSave(sender: AnyObject) {
-        //4 Add Save Logic
+        
+    //1 Add Save Logic
+        
+        //**Begin Copy**
         if (contactdb != nil)
         {
             
@@ -65,10 +55,34 @@ class ViewController: UIViewController {
             self.dismissViewControllerAnimated(false, completion: nil)
             
         }
+        //**End Copy**
     }
+    
+    @IBAction func btnBack(sender: AnyObject) {
+    //2) Dismiss ViewController
+        
+        //**Begin Copy**
+        self.dismissViewControllerAnimated(false, completion: nil)
+        //**End Copy**
+    }
+    
+    //3) Add ManagedObject Data Context
+    
+        //**Begin Copy**
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        //**End Copy**
+    
+    //4) Add variable contactdb (used from UITableView
+    
+        //**Begin Copy**
+    var contactdb:NSManagedObject!
+        //**End Copy**
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //5 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
+    //5 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
+        
+        //**Begin Copy**
         if (contactdb != nil)
         {
             fullname.text = contactdb.valueForKey("fullname") as? String
@@ -85,6 +99,8 @@ class ViewController: UIViewController {
 
 
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //**End Copy**
     }
 
     override func didReceiveMemoryWarning() {
@@ -93,14 +109,19 @@ class ViewController: UIViewController {
     }
     
     //6 Add to hide keyboard
+    
+    //**Begin Copy**
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches , withEvent:event)
         if (touches.first as UITouch!) != nil {
             DismissKeyboard()
         }
     }
+    //**End Copy**
     
     //7 Add to hide keyboard
+    
+    //**Begin Copy**
     func DismissKeyboard(){
         //forces resign first responder and hides keyboard
         fullname.endEditing(true)
@@ -108,14 +129,15 @@ class ViewController: UIViewController {
         phone.endEditing(true)
         
     }
+    //**End Copy**
+    
     //8 Add to hide keyboard
+    
+    //**Begin Copy**
     func textFieldShouldReturn(textField: UITextField!) -> Bool     {
         textField.resignFirstResponder()
         return true;
     }
-    
-
-
-
+    //**End Copy**
 }
 
