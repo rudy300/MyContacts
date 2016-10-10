@@ -3,7 +3,7 @@
 //  MyContacts
 //
 //  Created by Charles Konkol on 2016-05-05
-//  Copyright © 2015 Chuck Konkol. All rights reserved.
+//  Copyright © 2016 Chuck Konkol. All rights reserved.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
